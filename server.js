@@ -78,7 +78,6 @@ async function downloadFile(file, res) {
     cloudinary.api
         .resource_by_asset_id([file.assetId])
         .then(result => {
-            // res.redirect({result})
             let url = result.secure_url;
             const uploadIndex = url.indexOf("upload");
             let temp = "fl_attachment" + url.slice(uploadIndex + 6);
@@ -86,8 +85,3 @@ async function downloadFile(file, res) {
             res.redirect(url);
         })
 }
-
-//todo
-//use fl_attachment after/upload;
-//url2="fl_attachment"+url.slice(43+6)
-//url.slice(0,43) +"upload/"+url2
