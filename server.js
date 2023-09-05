@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const File = require("./models/File");
 const saltRounds = 10;
 const { cloudinary } = require('./utils/cloudenary')
-const fs = require("fs");
+const fs = require('fs').promises;
 
 const app = express();
 app.use(express.static(__dirname + '/public'));
@@ -35,7 +35,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         fileData.assetId = result.asset_id
     } else {
         path = path + "." + ext;
-        fs.renameSync(fileData.path, path);
+        await fs.rename(fileData.path, path);
         const result = await cloudinary.uploader.upload(path, { folder: '', resource_type: 'raw' });
         fileData.assetId = result.asset_id
     }
